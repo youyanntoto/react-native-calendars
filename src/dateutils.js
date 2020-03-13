@@ -49,7 +49,7 @@ function weekDayNames(firstDayOfWeek = 0) {
   return weekDaysNames;
 }
 
-function page(xd, firstDayOfWeek) {
+function page(xd, firstDayOfWeek, minWeeks) {
   const days = month(xd);
   let before = [], after = [];
 
@@ -67,6 +67,9 @@ function page(xd, firstDayOfWeek) {
   const day = to.getDay();
   if (day !== ldow) {
     to.addDays((ldow + 7 - day) % 7);
+  }
+  if (minWeeks) {
+    to.addDays(7 * Math.max(0, (minWeeks - 1 - Math.floor(from.diffWeeks(to)))));
   }
 
   if (isLTE(from, days[0])) {
