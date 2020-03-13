@@ -53,7 +53,9 @@ class CalendarList extends Component {
     /** A custom key extractor for the generated calendar months */
     keyExtractor: PropTypes.func,
     /** Render extra week. Default = 0 */
-    minWeeks : PropTypes.number
+    minWeeks : PropTypes.number,
+    /** Listener for scroll **/
+    onScroll: PropTypes.func
   }
 
   static defaultProps = {
@@ -322,6 +324,7 @@ class CalendarList extends Component {
           onEndReachedThreshold={this.props.onEndReachedThreshold}
           onEndReached={this.props.onEndReached}
           keyboardShouldPersistTaps={this.props.keyboardShouldPersistTaps}
+          onScroll={this.props.onScroll}
         />
         {this.renderStaticHeader()}
       </View>
