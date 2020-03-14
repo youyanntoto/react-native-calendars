@@ -76,6 +76,7 @@ class CalendarListItem extends Component {
           firstDay={this.props.firstDay}
           monthFormat={this.props.monthFormat}
           dayComponent={this.props.dayComponent}
+          weekComponent={this.props.weekComponent}
           disabledByDefault={this.props.disabledByDefault}
           showWeekNumbers={this.props.showWeekNumbers}
           renderArrow={this.props.renderArrow}

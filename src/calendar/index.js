@@ -63,6 +63,8 @@ class Calendar extends Component {
     renderArrow: PropTypes.func,
     /** Provide custom day rendering component */
     dayComponent: PropTypes.any,
+    /** Provide additional week rendering component */
+    weekComponent: PropTypes.any,
     /** Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting */
     monthFormat: PropTypes.string,
     /** Disables changing month when click on days of other months (when hideExtraDays is false). Default = false */
@@ -285,7 +287,20 @@ class Calendar extends Component {
       week.unshift(this.renderWeekNumber(days[days.length - 1].getWeek()));
     }
 
-    return (<View style={this.style.week} key={id}>{week}</View>);
+    const WeekComp = this.props.weekComponent;
+    return (
+      <View style={this.style.weekArea} key={id}>
+        <View style={this.style.week}>{week}</View>
+        {WeekComp &&
+        <WeekComp
+          index={id}
+          markings={days.map(day => this.getDateMarking(day))}
+          firstDate={xdateToData(days[0])}
+          lastDate={xdateToData(days[days.length - 1])}
+        />
+        }
+      </View>
+    );
   }
 
   render() {
