@@ -55,7 +55,9 @@ class CalendarList extends Component {
     /** Render extra week. Default = 0 */
     minWeeks : PropTypes.number,
     /** Listener for scroll **/
-    onScroll: PropTypes.func
+    onScroll: PropTypes.func,
+    /** ExtraData for update list **/
+    extraData : PropTypes.any
   }
 
   static defaultProps = {
@@ -325,6 +327,7 @@ class CalendarList extends Component {
           onEndReached={this.props.onEndReached}
           keyboardShouldPersistTaps={this.props.keyboardShouldPersistTaps}
           onScroll={this.props.onScroll}
+          extraData={this.props.extraData}
         />
         {this.renderStaticHeader()}
       </View>
