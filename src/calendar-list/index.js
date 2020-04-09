@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import {ActivityIndicator, Dimensions, FlatList, Platform, ScrollView, View} from 'react-native';
 import PropTypes from 'prop-types';
 import XDate from 'xdate';
@@ -216,16 +216,31 @@ class CalendarList extends Component {
   }
 
   renderCalendar({item}) {
-    return (
-      <CalendarListItem
-        scrollToMonth={this.scrollToMonth.bind(this)}
-        item={item}
-        calendarHeight={this.props.calendarHeight}
-        calendarWidth={this.props.horizontal ? this.props.calendarWidth : undefined}
-        {...this.props}
-        style={this.props.calendarStyle}
-      />
-    );
+    if (this.props.verticalScrollable) {
+      return (
+        <ScrollView>
+          <CalendarListItem
+            scrollToMonth={this.scrollToMonth.bind(this)}
+            item={item}
+            calendarHeight={this.props.calendarHeight}
+            calendarWidth={this.props.horizontal ? this.props.calendarWidth : undefined}
+            {...this.props}
+            style={this.props.calendarStyle}
+          />
+        </ScrollView>
+      );
+    } else {
+      return (
+        <CalendarListItem
+          scrollToMonth={this.scrollToMonth.bind(this)}
+          item={item}
+          calendarHeight={this.props.calendarHeight}
+          calendarWidth={this.props.horizontal ? this.props.calendarWidth : undefined}
+          {...this.props}
+          style={this.props.calendarStyle}
+        />
+      );
+    }
   }
 
   getItemLayout(data, index) {
@@ -300,8 +315,8 @@ class CalendarList extends Component {
   }
 
   render() {
-    const flatListCalendar = (
-      <Fragment>
+    return (
+      <View>
         <FlatList
           onLayout={this.onLayout}
           ref={(c) => this.listView = c}
@@ -332,22 +347,8 @@ class CalendarList extends Component {
           extraData={this.props.extraData}
         />
         {this.renderStaticHeader()}
-      </Fragment>
+      </View>
     );
-
-    if (this.props.verticalScrollable) {
-      return (
-        <ScrollView>
-          {flatListCalendar}
-        </ScrollView>
-      );
-    } else {
-      return (
-        <View>
-          {flatListCalendar}
-        </View>
-      );
-    }
   }
 }
 
