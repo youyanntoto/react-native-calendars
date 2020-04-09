@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import {FlatList, Platform, Dimensions, ActivityIndicator, View} from 'react-native';
+import React, {Component, Fragment} from 'react';
+import {ActivityIndicator, Dimensions, FlatList, Platform, ScrollView, View} from 'react-native';
 import PropTypes from 'prop-types';
 import XDate from 'xdate';
 
-import {xdateToData, parseDate} from '../interface';
+import {parseDate, xdateToData} from '../interface';
 import styleConstructor from './style';
 import dateutils from '../dateutils';
 import Calendar from '../calendar';
@@ -57,7 +57,9 @@ class CalendarList extends Component {
     /** Listener for scroll **/
     onScroll: PropTypes.func,
     /** ExtraData for update list **/
-    extraData : PropTypes.any
+    extraData : PropTypes.any,
+    /** Vertical scrollable **/
+    verticalScrollable : PropTypes.bool
   }
 
   static defaultProps = {
@@ -298,8 +300,8 @@ class CalendarList extends Component {
   }
 
   render() {
-    return (
-      <View>
+    const flatListCalendar = (
+      <Fragment>
         <FlatList
           onLayout={this.onLayout}
           ref={(c) => this.listView = c}
@@ -330,8 +332,22 @@ class CalendarList extends Component {
           extraData={this.props.extraData}
         />
         {this.renderStaticHeader()}
-      </View>
+      </Fragment>
     );
+
+    if (this.props.verticalScrollable) {
+      return (
+        <ScrollView>
+          {flatListCalendar}
+        </ScrollView>
+      );
+    } else {
+      return (
+        <View>
+          {flatListCalendar}
+        </View>
+      );
+    }
   }
 }
 
