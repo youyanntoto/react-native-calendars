@@ -21,6 +21,10 @@ export default function getStyle(theme={}) {
       flexDirection: 'row',
       justifyContent: 'space-around'
     },
+    day: {
+      flex : 1,
+      alignItems : 'center'
+    },
     ...(theme[STYLESHEET_ID] || {})
   });
 }
