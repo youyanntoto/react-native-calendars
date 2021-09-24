@@ -88,7 +88,9 @@ class Calendar extends Component {
     /** Provide aria-level for calendar heading for proper accessibility when used with web (react-native-web) */
     webAriaLevel: PropTypes.number,
     /** Render extra week. Default = 0 */
-    minWeeks: PropTypes.number
+    minWeeks: PropTypes.number,
+    /** Handler which gets executed when press month. */
+    onMonthPress : PropTypes.func
   };
 
   constructor(props) {
@@ -345,6 +347,7 @@ class Calendar extends Component {
           webAriaLevel={this.props.webAriaLevel}
           disableArrowLeft={this.props.disableArrowLeft}
           disableArrowRight={this.props.disableArrowRight}
+          onMonthPress={this.props.onMonthPress}
         />
         <View style={this.style.monthView}>{weeks}</View>
       </View>);

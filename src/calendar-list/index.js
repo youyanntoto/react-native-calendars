@@ -59,7 +59,9 @@ class CalendarList extends Component {
     /** ExtraData for update list **/
     extraData : PropTypes.any,
     /** Vertical scrollable **/
-    verticalScrollable : PropTypes.bool
+    verticalScrollable : PropTypes.bool,
+    /** Handler which gets executed when press month. */
+    onMonthPress : PropTypes.func
   }
 
   static defaultProps = {

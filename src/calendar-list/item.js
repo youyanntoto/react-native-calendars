@@ -86,6 +86,7 @@ class CalendarListItem extends Component {
           accessibilityElementsHidden={this.props.accessibilityElementsHidden} // iOS
           importantForAccessibility={this.props.importantForAccessibility} // Android
           minWeeks={this.props.minWeeks}
+          onMonthPress={this.props.onMonthPress}
         />
       );
     } else {

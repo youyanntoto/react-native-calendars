@@ -25,7 +25,8 @@ class CalendarHeader extends Component {
     onPressArrowRight: PropTypes.func,
     disableArrowLeft: PropTypes.bool,
     disableArrowRight: PropTypes.bool,
-    webAriaLevel: PropTypes.number
+    webAriaLevel: PropTypes.number,
+    onMonthPress: PropTypes.func
   };
 
   static defaultProps = {
@@ -40,6 +41,7 @@ class CalendarHeader extends Component {
     this.substractMonth = this.substractMonth.bind(this);
     this.onPressLeft = this.onPressLeft.bind(this);
     this.onPressRight = this.onPressRight.bind(this);
+    this.onMonthPress = this.onMonthPress.bind(this);
   }
 
   addMonth() {
@@ -97,6 +99,13 @@ class CalendarHeader extends Component {
     return this.addMonth();
   }
 
+  onMonthPress() {
+    const {onMonthPress} = this.props;
+    if (typeof onMonthPress === 'function') {
+      return onMonthPress(this.props.month.toString('yyyy-MM-01'));
+    }
+  }
+
   render() {
     let leftArrow = <View/>;
     let rightArrow = <View/>;
@@ -146,12 +155,12 @@ class CalendarHeader extends Component {
     const webProps = Platform.OS === 'web' ? {'aria-level': this.props.webAriaLevel} : {};
 
     return (
-      <View 
-        style={this.props.style} 
+      <View
+        style={this.props.style}
         accessible
         accessibilityRole={'adjustable'}
         accessibilityActions={[
-          {name: 'increment', label: 'increment'}, 
+          {name: 'increment', label: 'increment'},
           {name: 'decrement', label: 'decrement'}
         ]}
         onAccessibilityAction={this.onAccessibilityAction}
@@ -161,20 +170,24 @@ class CalendarHeader extends Component {
         <View style={this.style.header}>
           {leftArrow}
           <View style={{flexDirection: 'row'}}>
-            <Text
-              allowFontScaling={false}
-              style={this.style.monthText}
-              {...webProps}
-            >
-              {this.props.month.toString(this.props.monthFormat)}
-            </Text>
-            {indicator}
+            <TouchableOpacity
+              onPress={this.onMonthPress}
+              disabled={!this.props.onMonthPress}>
+              <Text
+                allowFontScaling={false}
+                style={this.style.monthText}
+                {...webProps}
+              >
+                {this.props.month.toString(this.props.monthFormat)}
+              </Text>
+              {indicator}
+            </TouchableOpacity>
           </View>
           {rightArrow}
         </View>
         {!this.props.hideDayNames &&
           <View style={this.style.week}>
-            {this.props.weekNumbers && 
+            {this.props.weekNumbers &&
               <Text allowFontScaling={false} style={this.style.dayHeader}></Text>
             }
             {weekDaysNames.map((day, idx) => (
