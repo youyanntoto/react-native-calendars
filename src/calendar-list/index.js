@@ -43,7 +43,7 @@ class CalendarList extends Component {
     /** Used when calendar scroll is horizontal, default is device width, pagination should be disabled */
     calendarWidth: PropTypes.number,
     /** Dynamic calendar height */
-    calendarHeight: PropTypes.number,
+    calendarHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     /** Should Keyboard persist taps */
     keyboardShouldPersistTaps: PropTypes.oneOf(['never', 'always', 'handled']),
     /** Style for the List item (the calendar) */
